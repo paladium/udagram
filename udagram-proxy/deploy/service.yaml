@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: udagram-proxy-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: udagram-proxy
+  ports:
+  - port: 8080
+    targetPort: 8080

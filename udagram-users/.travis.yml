@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - 13
+services:
+  - docker
+install:
+  - echo "Nothing to install"
+before_script:
+  - echo "No tests"
+script:
+  - docker --version
+  - docker build . -t udagram-users
+  - docker tag udagram-users dragma/udagram-users:$TRAVIS_JOB_NUMBER
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push dragma/udagram-users:$TRAVIS_JOB_NUMBER

@@ -1,0 +1,19 @@
+language: bash
+
+services:
+  - docker
+
+install:
+  - echo "Nothing to install"
+
+before_script:
+  - echo "No tests"
+
+script:
+  - docker --version
+  - docker build . -t=udagram-proxy
+  - docker tag udagram-proxy dragma/udagram-proxy:$TRAVIS_JOB_NUMBER
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push dragma/udagram-proxy:$TRAVIS_JOB_NUMBER

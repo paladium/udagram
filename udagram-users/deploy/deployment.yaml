@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udagram-users
+  labels:
+    app: udagram-users
+spec:
+  selector:
+    matchLabels:
+      app: udagram-users
+  template:
+    metadata:
+      labels:
+        app: udagram-users
+    spec:
+      containers:
+        - name: udagram-users
+          image: dragma/udagram-users:2.1
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: udagram-config
